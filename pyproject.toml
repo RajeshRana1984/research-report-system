@@ -1,0 +1,23 @@
+[project]
+name = "research-report-system"
+version = "0.1.0"
+description = "Multi-agent research & report system"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pydantic>=2.0",
+    "ollama",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["research_report_system"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
