@@ -21,3 +21,4 @@ packages = ["research_report_system"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
