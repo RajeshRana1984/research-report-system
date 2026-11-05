@@ -11,13 +11,16 @@ EXPECTED = "schemas ready"
 
 def main() -> None:
     try:
-        resp = ollama.chat(model=MODEL, messages=[{"role": "user", "content": PROMPT}])
+        resp = ollama.chat(model=MODEL, messages=[{"role": "user", "content": PROMPT}],
+                           options={"temperature": 0})
     except Exception as exc:  # connection refused, model missing, etc.
         sys.exit(f"FAIL: could not reach Ollama / model {MODEL}: {exc!r}\n"
                  "Is `ollama serve` running and the model pulled?")
-    reply = resp["message"]["content"].strip()
-    print(reply)
-    assert reply == EXPECTED, f"expected {EXPECTED!r}, got {reply!r}"
+    raw = resp["message"]["content"].strip()
+    print(raw)
+    # Small models often add capitalisation / trailing punctuation; ignore those.
+    reply = raw.rstrip(".!").strip().lower()
+    assert reply == EXPECTED, f"expected {EXPECTED!r}, got {raw!r}"
     print("OK")
 
 
